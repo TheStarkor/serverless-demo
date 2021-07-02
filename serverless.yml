@@ -64,6 +64,19 @@ functions:
       - http:
           path: create-file/{fileName}
           method: POST
+
+  proxy:
+    handler: lambdas/endpoints/proxy.handler
+    events:
+      - http:
+          path: dev/{proxy+}
+          method: ANY
+          integration: http-proxy
+          request:
+            uri: "https://ver2dev.knotehow.com/{proxy}"
+            parameters:
+              paths:
+                proxy: true
           
 resources:
   Resources:
